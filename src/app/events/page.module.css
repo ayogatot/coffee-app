@@ -1,0 +1,193 @@
+.main {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px;
+  padding-top: 48px;
+  padding-bottom: var(--spacing-section-gap);
+}
+
+.header {
+  margin-bottom: var(--spacing-section-gap);
+}
+
+.headerContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-stack-sm);
+  max-width: 672px;
+}
+
+.bentoGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-grid-gutter);
+}
+
+@media (min-width: 768px) {
+  .bentoGrid {
+    grid-template-columns: repeat(12, 1fr);
+  }
+}
+
+.colSpan8 {
+  grid-column: span 1;
+}
+
+@media (min-width: 768px) {
+  .colSpan8 {
+    grid-column: span 8;
+  }
+}
+
+.colSpan4 {
+  grid-column: span 1;
+}
+
+@media (min-width: 768px) {
+  .colSpan4 {
+    grid-column: span 4;
+  }
+}
+
+.card {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.imageContainer {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--spacing-stack-sm);
+  flex-shrink: 0;
+}
+
+.topRowImage {
+  height: 280px;
+}
+
+@media (min-width: 768px) {
+  .topRowImage {
+    height: 420px;
+  }
+}
+
+.aspect45 {
+  aspect-ratio: 4 / 5;
+}
+
+.image {
+  object-fit: cover;
+  transition: transform 0.7s ease;
+}
+
+.card:hover .image {
+  transform: scale(1.05);
+}
+
+.card:hover h2 {
+  color: var(--color-secondary) !important;
+}
+
+.dateTag {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  background-color: rgba(254, 248, 243, 0.9);
+  backdrop-filter: blur(4px);
+  padding: 8px 16px;
+  border-radius: var(--radius-default);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-grow: 1;
+}
+
+.link {
+  font-family: var(--font-inter);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  border-bottom: 1px solid var(--color-primary);
+  width: fit-content;
+  margin-top: auto;
+  padding-bottom: 2px;
+  transition: border-color 0.3s;
+}
+
+.link:hover {
+  border-color: var(--color-outline);
+}
+
+.bottomGrid {
+  grid-column: span 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-grid-gutter);
+  margin-top: 48px;
+}
+
+@media (min-width: 768px) {
+  .bottomGrid {
+    grid-column: span 12;
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.newsletter {
+  margin-top: var(--spacing-section-gap);
+  background-color: var(--color-surface-container-low);
+  padding: 48px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.formGroup {
+  display: flex;
+  width: 100%;
+  max-width: 450px;
+  gap: 16px;
+}
+
+.input {
+  flex-grow: 1;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--color-outline);
+  outline: none;
+  padding: 8px 0;
+  font-family: var(--font-inter);
+  font-size: 16px;
+  color: var(--color-on-surface);
+  transition: border-color 0.3s;
+}
+
+.input:focus {
+  border-color: var(--color-primary);
+}
+
+.submitButton {
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+  padding: 12px 32px;
+  font-family: var(--font-inter);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: background-color 0.3s;
+}
+
+.submitButton:hover {
+  background-color: var(--color-secondary);
+}

@@ -1,0 +1,298 @@
+.main {
+  width: 100%;
+}
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 870px;
+  overflow: hidden;
+}
+
+.heroImage {
+  object-fit: cover;
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(51, 37, 29, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 32px;
+}
+
+.mission {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 80px 32px;
+}
+
+.missionContent {
+  max-width: 768px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.divider {
+  width: 64px;
+  height: 1px;
+  background-color: rgba(183, 172, 162, 0.5);
+  margin: 0 auto;
+}
+
+.bentoSection {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 80px 32px;
+  background-color: var(--color-surface-container-low);
+  border-radius: var(--radius-xl);
+  margin-bottom: 80px;
+}
+
+.bentoGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-grid-gutter);
+}
+
+@media (min-width: 768px) {
+  .bentoGrid {
+    grid-template-columns: repeat(12, 1fr);
+  }
+}
+
+.colSpan7 {
+  grid-column: span 1;
+}
+@media (min-width: 768px) { .colSpan7 { grid-column: span 7; } }
+
+.colSpan5 {
+  grid-column: span 1;
+}
+@media (min-width: 768px) { .colSpan5 { grid-column: span 5; } }
+
+.colSpan4 {
+  grid-column: span 1;
+}
+@media (min-width: 768px) { .colSpan4 { grid-column: span 4; } }
+
+.colSpan8 {
+  grid-column: span 1;
+}
+@media (min-width: 768px) { .colSpan8 { grid-column: span 8; } }
+
+.bentoBox {
+  background-color: white;
+  padding: 48px;
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid rgba(183, 172, 162, 0.2);
+}
+
+.bentoImage {
+  position: relative;
+  height: 400px;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+}
+
+@media (min-width: 768px) {
+  .bentoImage {
+    height: auto;
+  }
+}
+
+.image {
+  object-fit: cover;
+}
+
+.imageHover {
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.imageHover:hover {
+  transform: scale(1.05);
+  filter: grayscale(0%) !important;
+}
+
+.iconList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-family: var(--font-inter);
+  font-style: italic;
+  font-size: 16px;
+  color: var(--color-on-surface);
+}
+
+.iconList li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.processGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(183, 172, 162, 0.2);
+}
+
+.subtext {
+  font-family: var(--font-inter);
+  font-size: 12px;
+  color: var(--color-on-surface-variant);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.pillarsSection {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 80px 32px;
+}
+
+.pillarsHeader {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.pillarsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 80px;
+}
+
+@media (min-width: 768px) {
+  .pillarsGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.pillarCard {
+  cursor: pointer;
+}
+
+.pillarCard:hover .imageHover {
+  transform: scale(1.05);
+}
+
+.pillarImageContainer {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  margin-bottom: 32px;
+}
+
+.btn {
+  font-family: var(--font-inter);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 12px 32px;
+  transition: all 0.2s;
+}
+
+.btnOutline {
+  border: 1px solid var(--color-primary);
+  color: var(--color-primary);
+}
+
+.btnOutline:hover {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.btnSolid {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.btnSolid:hover {
+  background-color: var(--color-primary-container);
+}
+
+.newsletter {
+  background-color: var(--color-primary-container);
+  color: white;
+  padding: 96px 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.newsletterContent {
+  position: relative;
+  z-index: 10;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px;
+  text-align: center;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 448px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .formGroup {
+    flex-direction: row;
+  }
+}
+
+.input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 12px 8px;
+  outline: none;
+  font-family: var(--font-inter);
+  font-size: 16px;
+  color: white;
+  width: 100%;
+}
+
+.input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.input:focus {
+  border-color: white;
+}
+
+.submitButton {
+  background-color: white;
+  color: var(--color-primary-container);
+  padding: 12px 32px;
+  font-family: var(--font-inter);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.newsletterPattern {
+  position: absolute;
+  inset: 0;
+  opacity: 0.1;
+  pointer-events: none;
+  /* Simulating the pattern without external image to avoid CORS/loading issues */
+  background-image: radial-gradient(circle, #ffffff 1px, transparent 1px);
+  background-size: 10px 10px;
+}
