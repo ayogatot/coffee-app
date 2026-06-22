@@ -1,0 +1,215 @@
+.main {
+  padding-top: 80px;
+}
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 716px;
+  overflow: hidden;
+}
+
+.heroImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: flex-end;
+}
+
+.heroContent {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px 64px 32px;
+  width: 100%;
+}
+
+.quickInfo {
+  background-color: var(--color-surface-container-low);
+  border-bottom: 1px solid rgba(210, 196, 189, 0.3);
+}
+
+.quickInfoContainer {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 64px;
+  row-gap: 24px;
+}
+
+.quickInfoItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.layout {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 80px 32px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 64px;
+}
+
+@media (min-width: 1024px) {
+  .layout {
+    grid-template-columns: repeat(12, 1fr);
+  }
+}
+
+.mainColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+@media (min-width: 1024px) {
+  .mainColumn {
+    grid-column: span 8;
+  }
+}
+
+.grid2Col {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 768px) {
+  .grid2Col {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.card {
+  padding: 32px;
+  background-color: var(--color-surface-container);
+  border: 1px solid rgba(210, 196, 189, 0.3);
+}
+
+.sidebar {
+}
+
+@media (min-width: 1024px) {
+  .sidebar {
+    grid-column: span 4;
+  }
+}
+
+.stickySidebar {
+  position: sticky;
+  top: 112px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.reservationCard {
+  background-color: #ffffff;
+  padding: 32px;
+  border: 1px solid rgba(210, 196, 189, 0.5);
+  box-shadow: 0 20px 40px -15px rgba(74, 59, 50, 0.06);
+}
+
+.buttonPrimary {
+  width: 100%;
+  background-color: var(--color-primary);
+  color: white;
+  padding: 16px;
+  text-transform: uppercase;
+  transition: opacity 0.2s;
+}
+
+.buttonPrimary:hover {
+  opacity: 0.9;
+}
+
+.buttonPrimary:active {
+  transform: scale(0.98);
+}
+
+.hostCard {
+  padding: 32px;
+  background-color: rgba(236, 231, 226, 0.5);
+  border: 1px solid rgba(210, 196, 189, 0.2);
+}
+
+.venueCard {
+  padding: 32px;
+  border: 1px solid rgba(210, 196, 189, 0.3);
+}
+
+.mapContainer {
+  aspect-ratio: 16 / 9;
+  background-color: var(--color-secondary-container);
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.newsletter {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 32px 80px 32px;
+}
+
+.newsletterBox {
+  background-color: var(--color-primary);
+  padding: 48px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+@media (min-width: 768px) {
+  .newsletterBox {
+    padding: 80px;
+  }
+}
+
+.newsletterForm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 512px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .newsletterForm {
+    flex-direction: row;
+  }
+}
+
+.newsletterInput {
+  flex-grow: 1;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: white;
+  padding: 16px 24px;
+}
+
+.newsletterInput::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.newsletterButton {
+  background-color: white;
+  color: var(--color-primary);
+  padding: 16px 32px;
+  white-space: nowrap;
+}
+
+.newsletterButton:hover {
+  background-color: var(--color-secondary-fixed);
+}

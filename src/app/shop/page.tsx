@@ -1,10 +1,12 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import styles from './page.module.css';
 
 export default function Shop() {
   const products = [
     {
       id: 1,
+      slug: 'ethiopia-yirgacheffe',
       title: 'Ethiopia Yirgacheffe',
       roast: 'Light',
       notes: 'Bergamot, Jasmine, Lemon Zest',
@@ -13,6 +15,7 @@ export default function Shop() {
     },
     {
       id: 2,
+      slug: 'panama-geisha-green',
       title: 'Panama Geisha Green',
       roast: 'Raw',
       notes: 'Florals, Honey, Peach',
@@ -21,6 +24,7 @@ export default function Shop() {
     },
     {
       id: 3,
+      slug: 'ritual-espresso-blend',
       title: 'Ritual Espresso Blend',
       roast: 'Dark',
       notes: 'Dark Chocolate, Molasses, Hazelnut',
@@ -29,6 +33,7 @@ export default function Shop() {
     },
     {
       id: 4,
+      slug: 'colombia-huila',
       title: 'Colombia Huila',
       roast: 'Medium',
       notes: 'Caramel, Red Apple, Walnut',
@@ -37,6 +42,7 @@ export default function Shop() {
     },
     {
       id: 5,
+      slug: 'brazil-santos-green',
       title: 'Brazil Santos Green',
       roast: 'Raw',
       notes: 'Nutty, Malt, Soft Body',
@@ -45,6 +51,7 @@ export default function Shop() {
     },
     {
       id: 6,
+      slug: 'kenyan-sl28',
       title: 'Kenyan SL28',
       roast: 'Light',
       notes: 'Blackcurrant, Tomato, Grapefruit',
@@ -77,19 +84,23 @@ export default function Shop() {
         {products.map((product) => (
           <div key={product.id} className={styles.productCard}>
             <div className={styles.imageContainer}>
-              <Image
-                src={product.image}
-                alt={product.title}
-                fill
-                className={styles.productImage}
-              />
+              <Link href={`/shop/${product.slug}`} style={{ display: 'block', width: '100%', height: '100%' }}>
+                <Image
+                  src={product.image}
+                  alt={product.title}
+                  fill
+                  className={styles.productImage}
+                />
+              </Link>
               <div className={styles.quickAddOverlay}>
                 <button className={styles.quickAddButton}>Quick Add</button>
               </div>
             </div>
             <div className={styles.productInfo}>
               <div className={styles.productHeader}>
-                <h3 className="headline-md" style={{ color: 'var(--color-primary)', fontSize: '20px' }}>{product.title}</h3>
+                <Link href={`/shop/${product.slug}`} style={{ textDecoration: 'none' }}>
+                  <h3 className="headline-md" style={{ color: 'var(--color-primary)', fontSize: '20px' }}>{product.title}</h3>
+                </Link>
                 <span className={styles.roastTag}>{product.roast}</span>
               </div>
               <p className="body-md" style={{ color: 'var(--color-on-surface-variant)' }}>{product.notes}</p>
