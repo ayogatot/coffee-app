@@ -38,7 +38,6 @@ export default async function CoffeeBeansPage() {
                 <th className="px-6 py-4 font-semibold">Name</th>
                 <th className="px-6 py-4 font-semibold">Category</th>
                 <th className="px-6 py-4 font-semibold">Roast Level</th>
-                <th className="px-6 py-4 font-semibold">Origin</th>
                 <th className="px-6 py-4 font-semibold">Price</th>
                 <th className="px-6 py-4 font-semibold">Stock</th>
                 <th className="px-6 py-4 font-semibold text-right">Actions</th>
@@ -47,7 +46,7 @@ export default async function CoffeeBeansPage() {
             <tbody className="divide-y divide-slate-100">
               {beans?.length === 0 ? (
                 <tr>
-                  <td colSpan={8} className="px-6 py-8 text-center text-slate-500">
+                  <td colSpan={7} className="px-6 py-8 text-center text-slate-500">
                     No coffee beans found. Add your first one!
                   </td>
                 </tr>
@@ -87,7 +86,6 @@ export default async function CoffeeBeansPage() {
                         </span>
                       </td>
                       <td className="px-6 py-4 text-slate-600">{bean.roast_level || '-'}</td>
-                      <td className="px-6 py-4 text-slate-600">{bean.origin || '-'}</td>
                       <td className="px-6 py-4">${Number(bean.price).toFixed(2)}</td>
                       <td className="px-6 py-4">
                         <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${bean.stock > 10 ? 'bg-green-100 text-green-700' : bean.stock > 0 ? 'bg-yellow-100 text-yellow-700' : 'bg-red-100 text-red-700'}`}>

@@ -39,7 +39,6 @@ export default async function EventsPage() {
                 <th className="px-6 py-4 font-semibold">Badge</th>
                 <th className="px-6 py-4 font-semibold">Date</th>
                 <th className="px-6 py-4 font-semibold">Time</th>
-                <th className="px-6 py-4 font-semibold">Venue</th>
                 <th className="px-6 py-4 font-semibold">Price</th>
                 <th className="px-6 py-4 font-semibold">Capacity</th>
                 <th className="px-6 py-4 font-semibold text-right">Actions</th>
@@ -48,7 +47,7 @@ export default async function EventsPage() {
             <tbody className="divide-y divide-slate-100">
               {events?.length === 0 ? (
                 <tr>
-                  <td colSpan={9} className="px-6 py-8 text-center text-slate-500">
+                  <td colSpan={8} className="px-6 py-8 text-center text-slate-500">
                     No events found. Create your first one!
                   </td>
                 </tr>
@@ -76,11 +75,10 @@ export default async function EventsPage() {
                       }) : '-'}
                     </td>
                     <td className="px-6 py-4 text-slate-600">{event.event_time || '-'}</td>
-                    <td className="px-6 py-4 text-slate-600">{event.location || '-'}</td>
                     <td className="px-6 py-4">${Number(event.price || 0).toFixed(2)}</td>
                     <td className="px-6 py-4">
                       <span className="px-2 py-1 bg-slate-100 rounded text-xs font-semibold text-slate-700">
-                        {event.capacity || 0} seats
+                        {event.capacity || 0}
                       </span>
                     </td>
                     <td className="px-6 py-4 text-right">
