@@ -1,65 +1,72 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from './page.module.css';
+import { supabase } from '@/lib/supabase';
 
-export default function Events() {
-  const events = [
-    {
-      id: 1,
-      slug: 'telusur-rasa-wisata',
-      title: 'Telusur Rasa (Wisata)',
-      date: 'MAY 12',
-      description: 'Embark on a sensory journey through our estates. Experience the local culture and the origins of your favorite brew.',
-      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB1inzJZG4Ss2Sght_LgmJadmIhfhqcCrWHeSlZDYySocdgyubVncbLTRg0m9oMy20r3V-5wvY-Sc37UZZSRyhhDXiNwlcUga1uvVtymNyJVXg8BurgHSEsTj1Rya6R-evoARBj3PTTlnzH9HeXetXu1Ha8AKi7UdhaVcUWSLU_J_KhUVW9AuxXmv4OMiwAVxr1VatkqOnGunl0li7SFZWFRLTEVxYP3c7qnAOmotfn7fQ8bQkTrRzg59LRV_lC4ccKTSYFxsbaY9VJ',
-      buttonText: 'RESERVE SPOT',
-      colSpan: 'colSpan8',
-      imageClass: 'topRowImage',
-    },
-    {
-      id: 2,
-      slug: 'farm-trip',
-      title: 'Farm Trip',
-      date: 'MAY 20',
-      description: 'A day on the land. Walk the rows, learn about soil health, and see the harvest process firsthand.',
-      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDVenja5SsAmlumdWQL0bYukDU_thB-3DrAr5NSHE0_EOKo_5tY5lag7JKgkQ8SYJzLnuihn0l7DRaUz6Ap8YOvncxOBGi0DTHfVjYnOkkQb969pQuQbwEDDRYVUr9IPHV0Ck7nSuDA4pvv9-g7zEilaGso5jqJixd8ZKyeG1ORLJl6ERt0Vytlk5McBA9hgZqR6WmF4C2m0VgwEB6FpYppQ-oe_y7hD6JgERm0TzPPUiHvUBiBeVGUddpc65ZG7ECOF9poK0ehP0Iu',
-      buttonText: 'LEARN MORE',
-      colSpan: 'colSpan4',
-      imageClass: 'topRowImage',
-    },
-    {
-      id: 3,
-      slug: 'farm-trip-glamping',
-      title: 'Farm Trip + Glamping',
-      date: 'JUN 02-04',
-      description: 'The ultimate immersion. Spend two nights under the stars in the heart of our coffee forests.',
-      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAIF1aG173qPR-UNG_t2j8hWosK5tOfGieeIArS3eO1WMvXXJC9x5yb2lqzrkiwVYB4Ie6LLXay9fxasBMVO_SEXvokFkSZTFWW1g2f5KinKj-J_FBcRUdZNgku2zgnQwMDkreRpCzgQlVhBYLrrKWuaKAS0nVfqVNW13IgvvHtVVpSNGE1rEqSaVBWpH_H7wGa99UbjxppLqJx7LTKyL_OTJaNk3LfAVszd--1zfb2c5dds9LC_n9eXTNeNZQR0F7JT8ErSVPxX2Sb',
-      buttonText: 'VIEW PACKAGE',
-      colSpan: '',
-      imageClass: 'aspect45',
-    },
-    {
-      id: 4,
-      slug: 'kelas-kopi',
-      title: 'Kelas Kopi',
-      date: 'JUN 10',
-      description: 'Foundational skills for home enthusiasts. Learn brewing theory and dial in your morning ritual.',
-      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAYWawYRXmjc2chszQVHMUkfI_r--M1UTPWi5jMslaSb0G3kOxr1GcSttHhDDuLvbiUSSpGHK3hL0g_ubn5bieLzGIDxtzMSgAHziYMeiAgfFoOTReCxpwSJy2bVRygeIT-oJaKa2uzvtudNYhG318xUwK3HtZPPOtHjMDSW0yzoVjQZykV5KrhEQunHrr_J9-U5uNEEEoPR4_1EK3-mVSi8bVG8iKawx4WivcZeV8w1UcNGh-pyHiKfy_9zYDdBEuW9tfDYyizW_kF',
-      buttonText: 'BOOK CLASS',
-      colSpan: '',
-      imageClass: 'aspect45',
-    },
-    {
-      id: 5,
-      slug: 'roasting-masterclass',
-      title: 'Roasting Class',
-      date: 'JUN 24',
-      description: 'Master the fire. Understanding the science of roasting from light to dark profiles.',
-      image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuD9ZAS-XPJf8gb1iLK22JP0K5BG7-4tXi99yLBdIknpASqJT8Ni-B1K4nocsl_dWVE7XImzP9U4e8C1H_vRJUoJIxLonVTMx7D3Fj-p4dk64J7dtjAvHZT5mN7INLcAMGXYGhx9upjDyDj9v8cuCi0dGcJ4pihKCp6fZqxTNm-jdsYUdKdIEO1vMuu2ZJ4Axs__xWMBllDwhnZGk-LIBd-HMlv4oCSj72MYZJZmxrIwYRNsJAYhmhdO4IgCGk4nlih7LXuTYw0-tiZ9',
-      buttonText: 'ENROLL NOW',
-      colSpan: '',
-      imageClass: 'aspect45',
+// Helper function to format the date string YYYY-MM-DD to MMM DD format (e.g. MAY 12)
+function formatEventDate(dateStr: string) {
+  try {
+    const datePart = dateStr.split('T')[0];
+    const [year, month, day] = datePart.split('-').map(Number);
+    if (isNaN(year) || isNaN(month) || isNaN(day)) {
+      return dateStr;
     }
-  ];
+    const date = new Date(year, month - 1, day);
+    const monthName = date.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
+    return `${monthName} ${String(day).padStart(2, '0')}`;
+  } catch (e) {
+    return dateStr;
+  }
+}
+
+export default async function Events() {
+  const { data: dbEvents, error } = await supabase
+    .from('events_view')
+    .select('*')
+    .order('event_date', { ascending: true });
+
+  if (error) {
+    console.error('Error fetching events:', error);
+  }
+
+  const events = (dbEvents || []).map((event, index) => {
+    // Top 2 events have colSpan colSpan8 / colSpan4 and imageClass topRowImage
+    // Other events have empty colSpan and imageClass aspect45
+    let colSpan = '';
+    let imageClass = 'aspect45';
+    if (index === 0) {
+      colSpan = 'colSpan8';
+      imageClass = 'topRowImage';
+    } else if (index === 1) {
+      colSpan = 'colSpan4';
+      imageClass = 'topRowImage';
+    }
+
+    // Map buttonText dynamically based on names
+    let buttonText = 'RESERVE SPOT';
+    const lowerName = event.name.toLowerCase();
+    if (lowerName.includes('trip')) {
+      buttonText = lowerName.includes('glamping') ? 'VIEW PACKAGE' : 'LEARN MORE';
+    } else if (lowerName.includes('class')) {
+      buttonText = lowerName.includes('roasting') ? 'ENROLL NOW' : 'BOOK CLASS';
+    }
+
+    // Trim description to keep grid items concise
+    const rawDesc = event.description || '';
+    const trimmedDesc = rawDesc.length > 120 ? `${rawDesc.slice(0, 120).trim()}...` : rawDesc;
+
+    return {
+      id: event.id,
+      slug: event.slug,
+      title: event.name,
+      date: formatEventDate(event.event_date),
+      description: trimmedDesc,
+      image: event.image_url || 'https://lh3.googleusercontent.com/aida-public/AB6AXuD6gbR1jk_J5dBYe573gQD4FwOAbxeDpM9JtjW2wZSZkxndsAuyBtjcGRQcVobXtIx22jS8erEWEffir6IS9Utgs2-tUAk8dcXK9P5of6letqKlhk3kVxUY4WRI0fQ0baGo9aUaAEdD9G0R_dakx8CwlmlolIfjCyjmtRvAslNC87-E4QHOUi2BakROoiOIBqRd6-8tzF95Tu6F2E-cGAIgfwXTuyEVRM2O2DpQqzylyIn97YvPddjCllrrbBmpX-ljTm617UmL4Dlk',
+      buttonText,
+      colSpan,
+      imageClass,
+    };
+  });
 
   const topEvents = events.slice(0, 2);
   const bottomEvents = events.slice(2);
@@ -77,42 +84,17 @@ export default function Events() {
         </div>
       </header>
 
-      {/* Events Bento Grid */}
-      <div className={styles.bentoGrid}>
-        {/* Top Row Grid */}
-        {topEvents.map((event) => (
-          <article key={event.id} className={`${styles.card} ${styles[event.colSpan]}`}>
-            <div className={`${styles.imageContainer} ${styles[event.imageClass]}`}>
-              <Link href={`/events/${event.slug}`} style={{ display: 'block', width: '100%', height: '100%' }}>
-                <Image
-                  src={event.image}
-                  alt={event.title}
-                  fill
-                  className={styles.image}
-                />
-              </Link>
-              <div className={styles.dateTag}>
-                <span className="label-caps" style={{ color: 'var(--color-primary)' }}>{event.date}</span>
-              </div>
-            </div>
-            <div className={styles.content}>
-              <Link href={`/events/${event.slug}`} style={{ textDecoration: 'none' }}>
-                <h2 className={event.colSpan === 'colSpan8' ? 'headline-lg' : 'headline-md'} style={{ color: 'var(--color-primary)' }}>
-                  {event.title}
-                </h2>
-              </Link>
-              <p className="body-md" style={{ color: 'var(--color-on-surface-variant)', ...(event.colSpan === 'colSpan8' ? { maxWidth: '600px' } : {}) }}>
-                {event.description}
-              </p>
-              <Link href={`/events/${event.slug}`} className={styles.link}>{event.buttonText}</Link>
-            </div>
-          </article>
-        ))}
-
-        {/* Bottom Row Grid */}
-        <div className={styles.bottomGrid}>
-          {bottomEvents.map((event) => (
-            <article key={event.id} className={styles.card}>
+      {events.length === 0 ? (
+        <div style={{ textAlign: 'center', padding: '64px 0', color: 'var(--color-on-surface-variant)' }}>
+          <p className="body-lg" style={{ marginBottom: '8px' }}>No upcoming events or workshops at the moment.</p>
+          <p className="body-md">Check back later or subscribe to our newsletter below to stay notified!</p>
+        </div>
+      ) : (
+        /* Events Bento Grid */
+        <div className={styles.bentoGrid}>
+          {/* Top Row Grid */}
+          {topEvents.map((event) => (
+            <article key={event.id} className={`${styles.card} ${event.colSpan ? styles[event.colSpan] : ''}`}>
               <div className={`${styles.imageContainer} ${styles[event.imageClass]}`}>
                 <Link href={`/events/${event.slug}`} style={{ display: 'block', width: '100%', height: '100%' }}>
                   <Image
@@ -128,17 +110,51 @@ export default function Events() {
               </div>
               <div className={styles.content}>
                 <Link href={`/events/${event.slug}`} style={{ textDecoration: 'none' }}>
-                  <h3 className="headline-md" style={{ color: 'var(--color-primary)' }}>{event.title}</h3>
+                  <h2 className={event.colSpan === 'colSpan8' ? 'headline-lg' : 'headline-md'} style={{ color: 'var(--color-primary)' }}>
+                    {event.title}
+                  </h2>
                 </Link>
-                <p className="body-md" style={{ color: 'var(--color-on-surface-variant)' }}>
+                <p className="body-md" style={{ color: 'var(--color-on-surface-variant)', ...(event.colSpan === 'colSpan8' ? { maxWidth: '600px' } : {}) }}>
                   {event.description}
                 </p>
                 <Link href={`/events/${event.slug}`} className={styles.link}>{event.buttonText}</Link>
               </div>
             </article>
           ))}
+
+          {/* Bottom Row Grid */}
+          {bottomEvents.length > 0 && (
+            <div className={styles.bottomGrid}>
+              {bottomEvents.map((event) => (
+                <article key={event.id} className={styles.card}>
+                  <div className={`${styles.imageContainer} ${styles[event.imageClass]}`}>
+                    <Link href={`/events/${event.slug}`} style={{ display: 'block', width: '100%', height: '100%' }}>
+                      <Image
+                        src={event.image}
+                        alt={event.title}
+                        fill
+                        className={styles.image}
+                      />
+                    </Link>
+                    <div className={styles.dateTag}>
+                      <span className="label-caps" style={{ color: 'var(--color-primary)' }}>{event.date}</span>
+                    </div>
+                  </div>
+                  <div className={styles.content}>
+                    <Link href={`/events/${event.slug}`} style={{ textDecoration: 'none' }}>
+                      <h3 className="headline-md" style={{ color: 'var(--color-primary)' }}>{event.title}</h3>
+                    </Link>
+                    <p className="body-md" style={{ color: 'var(--color-on-surface-variant)' }}>
+                      {event.description}
+                    </p>
+                    <Link href={`/events/${event.slug}`} className={styles.link}>{event.buttonText}</Link>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
         </div>
-      </div>
+      )}
 
       {/* Newsletter */}
       <section className={styles.newsletter}>

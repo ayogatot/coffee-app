@@ -34,6 +34,28 @@ export type CoffeeBeanDbRow = {
   updated_at: string | null
 }
 
+export type EventDbRow = {
+  id: string
+  name: string
+  description: string | null
+  badge: string | null
+  event_date: string
+  event_time: string | null
+  location: string | null
+  venue_address: string | null
+  price: number
+  capacity: number
+  image_url: string | null
+  whats_included: Json
+  host_name: string | null
+  host_title: string | null
+  host_avatar_url: string | null
+  host_bio: string | null
+  highlights: Json
+  created_at: string
+  updated_at: string | null
+}
+
 export type Database = {
   public: {
     Tables: {
@@ -96,27 +118,7 @@ export type Database = {
         Relationships: []
       }
       events: {
-        Row: {
-          id: string
-          name: string
-          description: string | null
-          badge: string | null
-          event_date: string
-          event_time: string | null
-          location: string | null
-          venue_address: string | null
-          price: number
-          capacity: number
-          image_url: string | null
-          whats_included: Json // stored as JSONB string[]
-          host_name: string | null
-          host_title: string | null
-          host_avatar_url: string | null
-          host_bio: string | null
-          highlights: Json // stored as JSONB array of objects
-          created_at: string
-          updated_at: string | null
-        }
+        Row: EventDbRow
         Insert: {
           id?: string
           name: string
@@ -236,6 +238,12 @@ export type Database = {
     Views: {
       coffee_beans_view: {
         Row: CoffeeBeanDbRow & {
+          slug: string
+        }
+        Relationships: []
+      }
+      events_view: {
+        Row: EventDbRow & {
           slug: string
         }
         Relationships: []
