@@ -130,7 +130,7 @@ export async function updateCoffeeBean(id: string, formData: FormData) {
     min_order_qty,
     packaging,
     image_url: imageUrls,
-    updated_at: new Date()
+    updated_at: new Date().toISOString()
   }).eq('id', id);
 
   if (error) throw new Error(error.message);
@@ -253,7 +253,7 @@ export async function updateEvent(id: string, formData: FormData) {
     host_avatar_url,
     host_bio,
     highlights,
-    updated_at: new Date()
+    updated_at: new Date().toISOString()
   }).eq('id', id);
 
   if (error) throw new Error(error.message);

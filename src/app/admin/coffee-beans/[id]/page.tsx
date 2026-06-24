@@ -27,7 +27,7 @@ export default async function EditCoffeeBeanPage({ params }: { params: { id: str
   let imageUrls: string[] = [];
   try {
     if (Array.isArray(bean.image_url)) {
-      imageUrls = bean.image_url;
+      imageUrls = bean.image_url as string[];
     } else if (typeof bean.image_url === 'string') {
       if (bean.image_url.trim().startsWith('[')) {
         imageUrls = JSON.parse(bean.image_url);

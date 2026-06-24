@@ -31,7 +31,7 @@ export default async function EditEventPage({ params }: { params: { id: string }
   let whatsIncluded: string[] = [];
   try {
     if (Array.isArray(event.whats_included)) {
-      whatsIncluded = event.whats_included;
+      whatsIncluded = event.whats_included as string[];
     } else if (typeof event.whats_included === 'string') {
       whatsIncluded = JSON.parse(event.whats_included);
     }
