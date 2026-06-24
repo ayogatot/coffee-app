@@ -148,81 +148,94 @@ export default async function ProductDetailPage({
                 {bean.brewing_recommendations || 'Use standard brewing methods for this bean profile.'}
               </div>
             </details>
+
+            <details className={styles.accordion}>
+              <summary className={styles.accordionSummary}>
+                <span className="label-caps">Technical Specifications</span>
+                <span className={`material-symbols-outlined ${styles.accordionIcon}`}>expand_more</span>
+              </summary>
+              <div className={`${styles.accordionContent} body-md`}>
+                <div className={styles.specsList}>
+                  <div className={styles.specRow}>
+                    <span className={styles.specLabel}>Category</span>
+                    <span className={styles.specVal}>{bean.category || '-'}</span>
+                  </div>
+                  <div className={styles.specRow}>
+                    <span className={styles.specLabel}>Species</span>
+                    <span className={styles.specVal}>{bean.species || '-'}</span>
+                  </div>
+                  <div className={styles.specRow}>
+                    <span className={styles.specLabel}>Variety / Varietal</span>
+                    <span className={styles.specVal}>{bean.variety || '-'}</span>
+                  </div>
+                  <div className={styles.specRow}>
+                    <span className={styles.specLabel}>Process</span>
+                    <span className={styles.specVal}>{bean.process || '-'}</span>
+                  </div>
+                  <div className={styles.specRow}>
+                    <span className={styles.specLabel}>Fermentation</span>
+                    <span className={styles.specVal}>{bean.fermentation || '-'}</span>
+                  </div>
+                  <div className={styles.specRow}>
+                    <span className={styles.specLabel}>Fermentation Temp</span>
+                    <span className={styles.specVal}>{bean.fermentation_temp || '-'}</span>
+                  </div>
+                  <div className={styles.specRow}>
+                    <span className={styles.specLabel}>Drying Method</span>
+                    <span className={styles.specVal}>{bean.drying_method || '-'}</span>
+                  </div>
+                  <div className={styles.specRow}>
+                    <span className={styles.specLabel}>Harvest Period</span>
+                    <span className={styles.specVal}>{bean.harvest_period || '-'}</span>
+                  </div>
+                  <div className={styles.specRow}>
+                    <span className={styles.specLabel}>Elevation / Altitude</span>
+                    <span className={styles.specVal}>{bean.elevation || '-'}</span>
+                  </div>
+                  <div className={styles.specRow}>
+                    <span className={styles.specLabel}>Origin / Region</span>
+                    <span className={styles.specVal}>{bean.origin || '-'}</span>
+                  </div>
+                  <div className={styles.specRow}>
+                    <span className={styles.specLabel}>Cup Character</span>
+                    <span className={styles.specVal}>{bean.cup_character || '-'}</span>
+                  </div>
+                </div>
+              </div>
+            </details>
+
+            <details className={styles.accordion}>
+              <summary className={styles.accordionSummary}>
+                <span className="label-caps">Commercial Information</span>
+                <span className={`material-symbols-outlined ${styles.accordionIcon}`}>expand_more</span>
+              </summary>
+              <div className={`${styles.accordionContent} body-md`}>
+                <div className={styles.specsList}>
+                  <div className={styles.specRow}>
+                    <span className={styles.specLabel}>Availability</span>
+                    <span className={styles.specVal}>{bean.availability || '-'}</span>
+                  </div>
+                  <div className={styles.specRow}>
+                    <span className={styles.specLabel}>Min. Order Qty</span>
+                    <span className={styles.specVal}>{bean.min_order_qty || '-'}</span>
+                  </div>
+                  <div className={styles.specRow}>
+                    <span className={styles.specLabel}>Packaging</span>
+                    <span className={styles.specVal}>{bean.packaging || '-'}</span>
+                  </div>
+                  <div className={styles.specRow}>
+                    <span className={styles.specLabel}>Current Stock</span>
+                    <span className={styles.specVal}>{bean.stock !== null && bean.stock !== undefined ? `${bean.stock} units` : '-'}</span>
+                  </div>
+                </div>
+              </div>
+            </details>
           </div>
         </div>
       </div>
 
-      {/* Technical Specifications Grid (Shows ALL Table Fields) */}
-      <section className={styles.specsSection}>
-        <h2 className="headline-lg" style={{ color: 'var(--color-primary)', marginBottom: '32px', borderBottom: '1px solid rgba(183, 172, 162, 0.3)', paddingBottom: '16px' }}>
-          Technical Specifications
-        </h2>
-        <div className={styles.specsGrid}>
-          <div className={styles.specCard}>
-            <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)' }}>Category</span>
-            <p className="body-md">{bean.category || '-'}</p>
-          </div>
-          <div className={styles.specCard}>
-            <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)' }}>Species</span>
-            <p className="body-md">{bean.species || '-'}</p>
-          </div>
-          <div className={styles.specCard}>
-            <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)' }}>Variety / Varietal</span>
-            <p className="body-md">{bean.variety || '-'}</p>
-          </div>
-          <div className={styles.specCard}>
-            <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)' }}>Process</span>
-            <p className="body-md">{bean.process || '-'}</p>
-          </div>
-          <div className={styles.specCard}>
-            <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)' }}>Fermentation</span>
-            <p className="body-md">{bean.fermentation || '-'}</p>
-          </div>
-          <div className={styles.specCard}>
-            <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)' }}>Fermentation Temp</span>
-            <p className="body-md">{bean.fermentation_temp || '-'}</p>
-          </div>
-          <div className={styles.specCard}>
-            <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)' }}>Drying Method</span>
-            <p className="body-md">{bean.drying_method || '-'}</p>
-          </div>
-          <div className={styles.specCard}>
-            <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)' }}>Harvest Period</span>
-            <p className="body-md">{bean.harvest_period || '-'}</p>
-          </div>
-          <div className={styles.specCard}>
-            <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)' }}>Elevation / Altitude</span>
-            <p className="body-md">{bean.elevation || '-'}</p>
-          </div>
-          <div className={styles.specCard}>
-            <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)' }}>Origin / Region</span>
-            <p className="body-md">{bean.origin || '-'}</p>
-          </div>
-          <div className={styles.specCard}>
-            <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)' }}>Cup Character</span>
-            <p className="body-md">{bean.cup_character || '-'}</p>
-          </div>
-          <div className={styles.specCard}>
-            <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)' }}>Availability</span>
-            <p className="body-md">{bean.availability || '-'}</p>
-          </div>
-          <div className={styles.specCard}>
-            <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)' }}>Min. Order Qty</span>
-            <p className="body-md">{bean.min_order_qty || '-'}</p>
-          </div>
-          <div className={styles.specCard}>
-            <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)' }}>Packaging</span>
-            <p className="body-md">{bean.packaging || '-'}</p>
-          </div>
-          <div className={styles.specCard}>
-            <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)' }}>Current Stock</span>
-            <p className="body-md">{bean.stock !== null && bean.stock !== undefined ? `${bean.stock} units` : '-'}</p>
-          </div>
-        </div>
-      </section>
-
       {/* Sensory Grid / Asymmetric Layout */}
-      <section className={styles.sensorySection}>
+      {/* <section className={styles.sensorySection}>
         <h2 className={`${styles.sensoryTitle} headline-lg`}>The Sensory Experience</h2>
         <div className={styles.sensoryGrid}>
           <div className={styles.sensoryMainImage}>
@@ -260,7 +273,7 @@ export default async function ProductDetailPage({
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
     </main>
   );
 }
