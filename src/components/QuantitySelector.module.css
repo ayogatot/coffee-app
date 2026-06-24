@@ -1,0 +1,23 @@
+.quantitySelector {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--color-outline);
+  padding: 12px 16px;
+  min-width: 140px;
+}
+
+.quantityBtn {
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.quantityBtn:hover {
+  opacity: 0.6;
+}

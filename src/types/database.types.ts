@@ -6,37 +6,39 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[]
 
-export interface Database {
+export type CoffeeBeanDbRow = {
+  id: string
+  name: string
+  category: string
+  price: number
+  stock: number
+  image_url: Json // stored as JSONB string[]
+  roast_level: string | null
+  brewing_recommendations: string | null
+  species: string | null
+  variety: string | null
+  process: string | null
+  fermentation: string | null
+  fermentation_temp: string | null
+  origin: string | null
+  elevation: string | null
+  drying_method: string | null
+  harvest_period: string | null
+  sensory_notes: string | null
+  story: string | null
+  cup_character: string | null
+  availability: string | null
+  min_order_qty: string | null
+  packaging: string | null
+  created_at: string
+  updated_at: string | null
+}
+
+export type Database = {
   public: {
     Tables: {
       coffee_beans: {
-        Row: {
-          id: string
-          name: string
-          category: string
-          price: number
-          stock: number
-          image_url: Json // stored as JSONB string[]
-          roast_level: string | null
-          brewing_recommendations: string | null
-          species: string | null
-          variety: string | null
-          process: string | null
-          fermentation: string | null
-          fermentation_temp: string | null
-          origin: string | null
-          elevation: string | null
-          drying_method: string | null
-          harvest_period: string | null
-          sensory_notes: string | null
-          story: string | null
-          cup_character: string | null
-          availability: string | null
-          min_order_qty: string | null
-          packaging: string | null
-          created_at: string
-          updated_at: string | null
-        }
+        Row: CoffeeBeanDbRow
         Insert: {
           id?: string
           name: string
@@ -224,7 +226,7 @@ export interface Database {
           {
             foreignKeyName: "event_registrations_event_id_fkey"
             columns: ["event_id"]
-            isOneToOne: false
+            isOneToOne: boolean
             referencedRelation: "events"
             referencedColumns: ["id"]
           }
@@ -232,7 +234,12 @@ export interface Database {
       }
     }
     Views: {
-      [_ in never]: never
+      coffee_beans_view: {
+        Row: CoffeeBeanDbRow & {
+          slug: string
+        }
+        Relationships: []
+      }
     }
     Functions: {
       [_ in never]: never
@@ -247,7 +254,7 @@ export interface Database {
 }
 
 // Helper types for frontend / action files
-export interface CoffeeBean {
+export type CoffeeBean = {
   id: string
   name: string
   category: string
@@ -275,12 +282,12 @@ export interface CoffeeBean {
   updated_at: string | null
 }
 
-export interface EventHighlight {
+export type EventHighlight = {
   title: string
   description: string
 }
 
-export interface Event {
+export type Event = {
   id: string
   name: string
   description: string | null
@@ -302,13 +309,13 @@ export interface Event {
   updated_at: string | null
 }
 
-export interface OrderBeanItem {
+export type OrderBeanItem = {
   bean_name?: string
   name?: string
   quantity: number
 }
 
-export interface Order {
+export type Order = {
   id: string
   customer_name: string
   whatsapp_number: string
@@ -319,7 +326,7 @@ export interface Order {
   updated_at: string | null
 }
 
-export interface EventRegistration {
+export type EventRegistration = {
   id: string
   participant_name: string
   whatsapp_number: string

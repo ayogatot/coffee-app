@@ -1,61 +1,85 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import styles from './page.module.css';
+import { supabase } from '@/lib/supabase';
+import ImageGallery from '@/components/ImageGallery';
+import QuantitySelector from '@/components/QuantitySelector';
 
-export default function ProductDetailPage({ params }: { params: { slug: string } }) {
+const FALLBACK_IMAGE = 'https://lh3.googleusercontent.com/aida-public/AB6AXuD6gbR1jk_J5dBYe573gQD4FwOAbxeDpM9JtjW2wZSZkxndsAuyBtjcGRQcVobXtIx22jS8erEWEffir6IS9Utgs2-tUAk8dcXK9P5of6letqKlhk3kVxUY4WRI0fQ0baGo9aUaAEdD9G0R_dakx8CwlmlolIfjCyjmtRvAslNC87-E4QHOUi2BakROoiOIBqRd6-8tzF95Tu6F2E-cGAIgfwXTuyEVRM2O2DpQqzylyIn97YvPddjCllrrbBmpX-ljTm617UmL4Dlk';
+
+export default async function ProductDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const resolvedParams = await params;
+  const { slug } = resolvedParams;
+
+  // Fetch the coffee bean by slug from the view
+  const { data: bean, error } = await supabase
+    .from('coffee_beans_view')
+    .select('*')
+    .eq('slug', slug)
+    .single();
+
+  if (error || !bean) {
+    notFound();
+  }
+
+  // Parse images safely
+  let imageUrls: string[] = [];
+  try {
+    if (Array.isArray(bean.image_url)) {
+      imageUrls = bean.image_url as string[];
+    } else if (typeof bean.image_url === 'string') {
+      if (bean.image_url.trim().startsWith('[')) {
+        imageUrls = JSON.parse(bean.image_url);
+      } else {
+        imageUrls = [bean.image_url];
+      }
+    }
+  } catch (e) {
+    imageUrls = [];
+  }
+
+  if (imageUrls.length === 0) {
+    imageUrls = [FALLBACK_IMAGE];
+  }
+
+  const formatPrice = `$${parseFloat(bean.price.toString()).toFixed(2)}`;
+  const displayTag = bean.category === 'Green Bean' ? 'Raw' : bean.roast_level || 'Roasted';
+
   return (
     <main className={styles.main}>
       {/* Breadcrumb */}
       <nav className={styles.breadcrumb}>
         <ol className={`${styles.breadcrumbList} label-caps`}>
-          <li className={styles.breadcrumbItem}>Shop</li>
+          <li className={styles.breadcrumbItem}>
+            <Link href="/shop" style={{ textDecoration: 'none', color: 'inherit' }}>Shop</Link>
+          </li>
           <li>/</li>
-          <li className={styles.breadcrumbItem}>Roasted Bean</li>
+          <li className={styles.breadcrumbItem}>
+            <Link href={`/shop?category=${encodeURIComponent(bean.category)}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+              {bean.category}
+            </Link>
+          </li>
           <li>/</li>
-          <li style={{ color: 'var(--color-primary)' }}>Ethiopian Sidamo</li>
+          <li style={{ color: 'var(--color-primary)' }}>{bean.name}</li>
         </ol>
       </nav>
 
       {/* Product Hero Section */}
       <div className={styles.productLayout}>
-        {/* Left: Product Image */}
+        {/* Left: Product Image Gallery */}
         <div className={styles.leftCol}>
-          <div className={styles.mainImageContainer}>
-            <img
-              alt="Ethiopian Sidamo Coffee Beans"
-              className={styles.mainImage}
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2TGEDA6FJU_V7mok6-vkUPRdPM3yqgoupuIwzMcfrvAlR0x5jA1mYcwJtO-q1umZp9f3q8xrDQHa0UUltR2Sk1Lcc4VMTEZyp7VcYvsBE0k5YLA_KJVmFqjEykHpdOHmb0vpmBMcn1001aWSUxjK5J6zo_oGsZsqLKCxXj12bjxzVL7fWYaa1LvnfuuZwo3isSDadIi5D2OhX0LGp1TG1adZkFOOHqv_jqdB5trXQowEwk2dSGzkEARs-UWJEdL0lrKv_sddDxiV-"
-            />
-          </div>
-          <div className={styles.thumbnailsGrid}>
-            <div className={styles.thumbnailContainer}>
-              <img
-                alt="Detail 1"
-                className={styles.thumbnail}
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkmx0bBh9ViBBBv5wXLGXbRgt_0xe394RlMY2Uf2RSuPVMQPUn-0NukOsxW9FHLO7TZH4uRfiGR7_vrfX2kebiCpRLvcam0rKBr772bYcdyIFy66kT_GgxFLyY1HygsrVOF2wNch6TG_QC3s6lQEVFRTvyyAM8agxXgGXh1GKw9812aHJ_U-KxcLP3tsectdvc718ofevT_8q3V2WGScypw5HM2fmfyfezVclPhdus4E9xSofY90FI1FwS-0lRYHz_IbV_Kh0QSvjT"
-              />
-            </div>
-            <div className={styles.thumbnailContainer}>
-              <img
-                alt="Detail 2"
-                className={styles.thumbnail}
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcEhE8-tili1hIGEnOljABge-o3HKAoGFTXFPt3y8fI0bXj0GIHAvciGg4KcQfdBdJOaATvbd-GizsWzQM0gddqdrHYnojh3xYExSXgwvP1yRlp1AnlTvjHa2YwAtnx9uwNTqjqG-i5FBt6BGZSwKxU5NWphIj58E6bzOOysJhN4tCpmhOa9Jd-qJifBSg1Xni0sbM6qYJH8MGIqOgbUd0ATPusO7LEtXm0wZEPEQQMIMXEZjuoNBgCIU4R3snkKl-Umz8aIjBKEo1"
-              />
-            </div>
-            <div className={styles.thumbnailContainer}>
-              <img
-                alt="Detail 3"
-                className={styles.thumbnail}
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDW-KYGWRG8ClrdoZDxFH3gwmKswskOyHDMCiKVGetBFs1KU2kR1acHCLXN0ORY4dWnHkNmTDAhfWOjsS2-GR88CGqVlOWdbZDAckRV4gf3nkfJlF7Ax70U0kpQGQGOjCwnlBaYWXFfgLZ05Tth8bvY_5KYkGOGwn7NrLl87RO2fXrunsEqQUWSjQYShUWJyTGv7zVs-m0a_-NfZc1dqCwn_xrRg3ABODSJ5_eOxdqFLFrtVeb-c27A-K-FOjY4ustd4u26D0dMeLoZ"
-              />
-            </div>
-          </div>
+          <ImageGallery imageUrls={imageUrls} name={bean.name} />
         </div>
 
         {/* Right: Product Info */}
         <div className={styles.rightCol}>
           <div>
-            <h1 className="display-lg" style={{ color: 'var(--color-primary)', marginBottom: '8px' }}>Ethiopian Sidamo</h1>
-            <p className="headline-md" style={{ color: 'var(--color-on-surface-variant)' }}>$28.00</p>
+            <h1 className="display-lg" style={{ color: 'var(--color-primary)', marginBottom: '8px' }}>{bean.name}</h1>
+            <p className="headline-md" style={{ color: 'var(--color-on-surface-variant)' }}>{formatPrice}</p>
           </div>
 
           <div className={styles.divider}></div>
@@ -64,57 +88,40 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
           <div className={styles.infoGroup}>
             <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)' }}>Roast Level</span>
             <div className={styles.roastLevel}>
-              <span className={`${styles.roastTag} label-caps`}>Light-Medium</span>
-              <div className={styles.roastDots}>
-                <div className={`${styles.dot} ${styles.dotActive}`}></div>
-                <div className={`${styles.dot} ${styles.dotActive}`}></div>
-                <div className={styles.dot}></div>
-                <div className={styles.dot}></div>
-                <div className={styles.dot}></div>
-              </div>
+              <span className={`${styles.roastTag} label-caps`}>{bean.roast_level || '-'}</span>
             </div>
           </div>
 
           {/* Tasting Notes */}
           <div className={styles.infoGroup}>
-            <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)' }}>Tasting Notes</span>
-            <p className="body-lg" style={{ color: 'var(--color-primary)', fontStyle: 'italic' }}>Floral, Blueberry, Lemon Zest</p>
+            <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)' }}>Tasting / Sensory Notes</span>
+            <p className="body-lg" style={{ color: 'var(--color-primary)', fontStyle: 'italic' }}>{bean.sensory_notes || '-'}</p>
           </div>
 
-          {/* Origin Info */}
+          {/* Origin Info Grid */}
           <div className={styles.originGrid}>
             <div>
-              <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)', display: 'block', marginBottom: '4px' }}>Region</span>
-              <p className="body-md">Sidama Zone, Ethiopia</p>
+              <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)', display: 'block', marginBottom: '4px' }}>Origin / Region</span>
+              <p className="body-md">{bean.origin || '-'}</p>
             </div>
             <div>
               <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)', display: 'block', marginBottom: '4px' }}>Process</span>
-              <p className="body-md">Washed</p>
+              <p className="body-md">{bean.process || '-'}</p>
             </div>
             <div>
-              <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)', display: 'block', marginBottom: '4px' }}>Altitude</span>
-              <p className="body-md">1,900 – 2,200 MASL</p>
+              <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)', display: 'block', marginBottom: '4px' }}>Elevation</span>
+              <p className="body-md">{bean.elevation || '-'}</p>
             </div>
             <div>
-              <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)', display: 'block', marginBottom: '4px' }}>Varietal</span>
-              <p className="body-md">Heirloom</p>
+              <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)', display: 'block', marginBottom: '4px' }}>Variety / Varietal</span>
+              <p className="body-md">{bean.variety || '-'}</p>
             </div>
           </div>
 
           <div className={styles.quantityAddRow}>
             <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)' }}>Select Quantity</span>
             <div className={styles.quantityAddContainer}>
-              {/* Quantity Selector */}
-              <div className={styles.quantitySelector}>
-                <button className={styles.quantityBtn}>
-                  <span className="material-symbols-outlined">remove</span>
-                </button>
-                <span className="body-md" style={{ fontWeight: 500 }}>1</span>
-                <button className={styles.quantityBtn}>
-                  <span className="material-symbols-outlined">add</span>
-                </button>
-              </div>
-              {/* Add to Cart */}
+              <QuantitySelector />
               <button className={`${styles.addToCartBtn} label-caps`}>
                 Add to Cart
               </button>
@@ -122,13 +129,13 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
           </div>
 
           <div className={styles.accordionGroup}>
-            <details className={styles.accordion}>
+            <details className={styles.accordion} open>
               <summary className={styles.accordionSummary}>
-                <span className="label-caps">Product Description</span>
+                <span className="label-caps">Story / Description</span>
                 <span className={`material-symbols-outlined ${styles.accordionIcon}`}>expand_more</span>
               </summary>
               <div className={`${styles.accordionContent} body-md`}>
-                This heirloom lot from the Sidama region represents the quintessential Ethiopian cup. Expect a complex bouquet of jasmine and citrus, followed by a heavy fruit sweetness reminiscent of fresh blueberries.
+                {bean.story || 'No story details provided for this lot.'}
               </div>
             </details>
 
@@ -138,12 +145,81 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
                 <span className={`material-symbols-outlined ${styles.accordionIcon}`}>expand_more</span>
               </summary>
               <div className={`${styles.accordionContent} body-md`}>
-                We recommend a 1:16 ratio using a Chemex or V60 to highlight the delicate floral notes and bright acidity of this coffee. Water temperature 202°F.
+                {bean.brewing_recommendations || 'Use standard brewing methods for this bean profile.'}
               </div>
             </details>
           </div>
         </div>
       </div>
+
+      {/* Technical Specifications Grid (Shows ALL Table Fields) */}
+      <section className={styles.specsSection}>
+        <h2 className="headline-lg" style={{ color: 'var(--color-primary)', marginBottom: '32px', borderBottom: '1px solid rgba(183, 172, 162, 0.3)', paddingBottom: '16px' }}>
+          Technical Specifications
+        </h2>
+        <div className={styles.specsGrid}>
+          <div className={styles.specCard}>
+            <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)' }}>Category</span>
+            <p className="body-md">{bean.category || '-'}</p>
+          </div>
+          <div className={styles.specCard}>
+            <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)' }}>Species</span>
+            <p className="body-md">{bean.species || '-'}</p>
+          </div>
+          <div className={styles.specCard}>
+            <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)' }}>Variety / Varietal</span>
+            <p className="body-md">{bean.variety || '-'}</p>
+          </div>
+          <div className={styles.specCard}>
+            <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)' }}>Process</span>
+            <p className="body-md">{bean.process || '-'}</p>
+          </div>
+          <div className={styles.specCard}>
+            <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)' }}>Fermentation</span>
+            <p className="body-md">{bean.fermentation || '-'}</p>
+          </div>
+          <div className={styles.specCard}>
+            <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)' }}>Fermentation Temp</span>
+            <p className="body-md">{bean.fermentation_temp || '-'}</p>
+          </div>
+          <div className={styles.specCard}>
+            <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)' }}>Drying Method</span>
+            <p className="body-md">{bean.drying_method || '-'}</p>
+          </div>
+          <div className={styles.specCard}>
+            <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)' }}>Harvest Period</span>
+            <p className="body-md">{bean.harvest_period || '-'}</p>
+          </div>
+          <div className={styles.specCard}>
+            <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)' }}>Elevation / Altitude</span>
+            <p className="body-md">{bean.elevation || '-'}</p>
+          </div>
+          <div className={styles.specCard}>
+            <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)' }}>Origin / Region</span>
+            <p className="body-md">{bean.origin || '-'}</p>
+          </div>
+          <div className={styles.specCard}>
+            <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)' }}>Cup Character</span>
+            <p className="body-md">{bean.cup_character || '-'}</p>
+          </div>
+          <div className={styles.specCard}>
+            <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)' }}>Availability</span>
+            <p className="body-md">{bean.availability || '-'}</p>
+          </div>
+          <div className={styles.specCard}>
+            <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)' }}>Min. Order Qty</span>
+            <p className="body-md">{bean.min_order_qty || '-'}</p>
+          </div>
+          <div className={styles.specCard}>
+            <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)' }}>Packaging</span>
+            <p className="body-md">{bean.packaging || '-'}</p>
+          </div>
+          <div className={styles.specCard}>
+            <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)' }}>Current Stock</span>
+            <p className="body-md">{bean.stock !== null && bean.stock !== undefined ? `${bean.stock} units` : '-'}</p>
+          </div>
+        </div>
+      </section>
 
       {/* Sensory Grid / Asymmetric Layout */}
       <section className={styles.sensorySection}>
@@ -164,7 +240,7 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
             <div className={styles.quoteBox}>
               <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)', marginBottom: '16px' }}>Master Roaster&apos;s Note</span>
               <blockquote className={styles.quoteText}>
-                &quot;The Sidamo terroir consistently delivers a clarity of flavor that is unmatched. We roast in small 5kg batches to ensure the volatile aromatics are preserved.&quot;
+                &quot;The {bean.origin || 'selected'} terroir consistently delivers a clarity of flavor that is unmatched. We roast in small 5kg batches to ensure the volatile aromatics are preserved.&quot;
               </blockquote>
             </div>
             <div className={styles.sensoryBottomRow}>
