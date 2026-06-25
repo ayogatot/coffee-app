@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import { CartProvider } from "@/context/CartContext";
 
 export const metadata: Metadata = {
   title: "Origin Wandhe Family Estate",
@@ -20,9 +21,11 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
       </head>
       <body>
-        <Navigation />
-        {children}
-        <Footer />
+        <CartProvider>
+          <Navigation />
+          {children}
+          <Footer />
+        </CartProvider>
       </body>
     </html>
   );

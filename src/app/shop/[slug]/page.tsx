@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import styles from './page.module.css';
 import { supabase } from '@/lib/supabase';
 import ImageGallery from '@/components/ImageGallery';
-import QuantitySelector from '@/components/QuantitySelector';
+import AddToCartForm from '@/components/AddToCartForm';
 
 const FALLBACK_IMAGE = 'https://lh3.googleusercontent.com/aida-public/AB6AXuD6gbR1jk_J5dBYe573gQD4FwOAbxeDpM9JtjW2wZSZkxndsAuyBtjcGRQcVobXtIx22jS8erEWEffir6IS9Utgs2-tUAk8dcXK9P5of6letqKlhk3kVxUY4WRI0fQ0baGo9aUaAEdD9G0R_dakx8CwlmlolIfjCyjmtRvAslNC87-E4QHOUi2BakROoiOIBqRd6-8tzF95Tu6F2E-cGAIgfwXTuyEVRM2O2DpQqzylyIn97YvPddjCllrrbBmpX-ljTm617UmL4Dlk';
 
@@ -120,12 +120,7 @@ export default async function ProductDetailPage({
 
           <div className={styles.quantityAddRow}>
             <span className="label-caps" style={{ color: 'var(--color-on-secondary-container)' }}>Select Quantity</span>
-            <div className={styles.quantityAddContainer}>
-              <QuantitySelector />
-              <button className={`${styles.addToCartBtn} label-caps`}>
-                Add to Cart
-              </button>
-            </div>
+            <AddToCartForm bean={bean} coverImage={imageUrls[0] || FALLBACK_IMAGE} />
           </div>
 
           <div className={styles.accordionGroup}>

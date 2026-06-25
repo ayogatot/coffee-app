@@ -4,10 +4,12 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import styles from './Navigation.module.css';
+import { useCart } from '@/context/CartContext';
 
 export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const { cartCount } = useCart();
 
   if (pathname?.startsWith('/admin')) {
     return null;
@@ -36,16 +38,13 @@ export default function Navigation() {
           </div>
         </div>
         <div className={styles.rightGroup}>
-          {/* <div className={styles.search}>
-            <span className="material-symbols-outlined">search</span>
-          </div> */}
           <div className={styles.actions}>
-            {/* <button className={styles.iconButton}>
-              <span className="material-symbols-outlined">person</span>
-            </button> */}
-            <button className={styles.iconButton}>
+            <Link href="/cart" className={`${styles.iconButton} ${styles.cartContainer}`} aria-label="View shopping bag">
               <span className="material-symbols-outlined">shopping_bag</span>
-            </button>
+              {cartCount > 0 && (
+                <span className={styles.badge}>{cartCount}</span>
+              )}
+            </Link>
           </div>
         </div>
       </div>

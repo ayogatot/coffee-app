@@ -1,0 +1,240 @@
+.main {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 48px 32px 160px 32px;
+}
+
+.checkoutLayout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 64px;
+  align-items: start;
+}
+
+@media (min-width: 1024px) {
+  .checkoutLayout {
+    grid-template-columns: 1fr 420px;
+  }
+}
+
+.formSection {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.sectionTitle {
+  font-family: var(--font-inter);
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--color-primary);
+  margin-bottom: 8px;
+}
+
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-secondary);
+}
+
+.input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--color-outline-variant);
+  outline: none;
+  padding: 12px 0;
+  font-family: var(--font-inter);
+  font-size: 16px;
+  color: var(--color-on-surface);
+  transition: border-color 0.3s;
+}
+
+.input:focus {
+  border-color: var(--color-primary);
+}
+
+.errorText {
+  font-size: 12px;
+  color: var(--color-error);
+  margin-top: 4px;
+}
+
+.errorBanner {
+  background-color: var(--color-error-container);
+  color: var(--color-on-error-container);
+  padding: 16px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+/* Sidebar Summary styling */
+.summarySidebar {
+  background-color: var(--color-surface-container-low);
+  border: 1px solid rgba(183, 172, 162, 0.15);
+  padding: 32px;
+  position: sticky;
+  top: 112px;
+}
+
+.sidebarTitle {
+  font-family: var(--font-inter);
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--color-primary);
+  margin-bottom: 24px;
+}
+
+.itemsPreviewList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-bottom: 1px solid rgba(183, 172, 162, 0.2);
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+}
+
+.previewItem {
+  display: flex;
+  gap: 16px;
+}
+
+.previewImageWrapper {
+  width: 64px;
+  height: 80px;
+  position: relative;
+  background-color: var(--color-surface-container-high);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.previewImage {
+  object-fit: cover;
+}
+
+.previewMeta {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 4px 0;
+  flex-grow: 1;
+}
+
+.previewName {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.previewSub {
+  font-size: 11px;
+  color: var(--color-on-surface-variant);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.previewPrice {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-primary);
+}
+
+.totals {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.totalRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  color: var(--color-on-surface-variant);
+}
+
+.grandTotalRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-primary);
+  border-top: 1px solid rgba(183, 172, 162, 0.2);
+  padding-top: 16px;
+  margin-top: 16px;
+}
+
+.placeOrderBtn {
+  width: 100%;
+  background-color: var(--color-primary-container);
+  color: white;
+  padding: 18px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 12px;
+  margin-top: 32px;
+}
+
+.placeOrderBtn:hover:not(:disabled) {
+  background-color: var(--color-primary);
+}
+
+.placeOrderBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.secureBadge {
+  text-align: center;
+  font-size: 10px;
+  color: var(--color-outline);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 16px;
+}
+
+.emptyCheckout {
+  text-align: center;
+  padding: 120px 32px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.emptyText {
+  margin-bottom: 24px;
+  color: var(--color-on-surface-variant);
+}
+
+.shopLink {
+  background-color: var(--color-primary-container);
+  color: white;
+  padding: 16px 40px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  display: inline-block;
+}
