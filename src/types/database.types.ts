@@ -163,14 +163,18 @@ export type Database = {
         }
         Relationships: []
       }
-      orders: {
+       orders: {
         Row: {
           id: string
           customer_name: string
           whatsapp_number: string
           email: string | null
           status: string
-          beans: Json // stored as JSONB array of { name: string, quantity: number }
+          beans: Json
+          shipping_address: string | null
+          total_weight: number | null
+          tracking_number: string | null
+          shipping_cost: number | null
           created_at: string
           updated_at: string | null
         }
@@ -181,6 +185,10 @@ export type Database = {
           email?: string | null
           status?: string
           beans: Json
+          shipping_address?: string | null
+          total_weight?: number | null
+          tracking_number?: string | null
+          shipping_cost?: number | null
           created_at?: string
           updated_at?: string | null
         }
@@ -191,6 +199,10 @@ export type Database = {
           email?: string | null
           status?: string
           beans?: Json
+          shipping_address?: string | null
+          total_weight?: number | null
+          tracking_number?: string | null
+          shipping_cost?: number | null
           created_at?: string
           updated_at?: string | null
         }

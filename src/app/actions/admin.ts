@@ -282,6 +282,28 @@ export async function deleteOrder(id: string) {
   revalidatePath('/admin/orders');
 }
 
+export async function updateOrderShippingDetails(
+  id: string,
+  shipping_address: string | null,
+  total_weight: number | null,
+  tracking_number: string | null,
+  shipping_cost: number | null
+) {
+  const { error } = await supabase
+    .from('orders')
+    .update({
+      shipping_address,
+      total_weight,
+      tracking_number,
+      shipping_cost,
+      status: 'in_progress'
+    })
+    .eq('id', id);
+
+  if (error) throw new Error(error.message);
+  revalidatePath('/admin/orders');
+}
+
 // === REGISTRATIONS ===
 
 export async function deleteRegistration(id: string) {

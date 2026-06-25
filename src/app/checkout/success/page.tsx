@@ -54,7 +54,10 @@ export default async function SuccessPage({
   }
 
   // Pricing calculations
-  // Shipping and taxes will be calculated afterwards by the admin
+  const shippingCost = orderData?.shipping_cost !== null && orderData?.shipping_cost !== undefined
+    ? Number(orderData.shipping_cost)
+    : null;
+  const totalCost = subtotal + (shippingCost || 0);
 
   const displayDate = orderData?.created_at
     ? new Date(orderData.created_at).toLocaleDateString('en-US', {
@@ -94,6 +97,17 @@ export default async function SuccessPage({
             </div>
           </div>
 
+          {orderData.shipping_address && (
+            <div className={styles.section}>
+              <h4 className={styles.sectionTitle}>Shipping Details</h4>
+              <div className={styles.customerInfo}>
+                <p><strong>Address:</strong> {orderData.shipping_address}</p>
+                {orderData.total_weight && <p><strong>Total Weight:</strong> {orderData.total_weight} kg</p>}
+                {orderData.tracking_number && <p><strong>Air Waybill (AWB):</strong> {orderData.tracking_number}</p>}
+              </div>
+            </div>
+          )}
+
           <div className={styles.section}>
             <h4 className={styles.sectionTitle}>Ritual Selection</h4>
             <div className={styles.itemsList}>
@@ -118,11 +132,17 @@ export default async function SuccessPage({
             </div>
             <div className={styles.totalRow}>
               <span>Shipping</span>
-              <span style={{ color: 'var(--color-outline)' }}>Calculated later</span>
+              {shippingCost !== null ? (
+                <span>${shippingCost.toFixed(2)}</span>
+              ) : (
+                <span style={{ color: 'var(--color-outline)' }}>Calculated later</span>
+              )}
             </div>
             <div className={styles.grandTotalRow}>
-              <span className={styles.totalLabel}>Estimated Total</span>
-              <span style={{ fontSize: '20px', fontWeight: 600 }}>${subtotal.toFixed(2)}</span>
+              <span className={styles.totalLabel}>
+                {shippingCost !== null ? 'Total' : 'Estimated Total'}
+              </span>
+              <span style={{ fontSize: '20px', fontWeight: 600 }}>${totalCost.toFixed(2)}</span>
             </div>
           </div>
         </div>
