@@ -75,9 +75,9 @@ async function ProductList({ activeCategory, currentPage }: ProductListProps) {
           const displayTag = bean.category === 'Green Bean' ? 'Raw' : bean.roast_level || 'Roasted';
 
           return (
-            <div key={bean.id} className={styles.productCard}>
+            <Link key={bean.id} href={`/shop/${bean.slug}`} className={styles.productCard}>
               <div className={styles.imageContainer}>
-                <Link href={`/shop/${bean.slug}`} style={{ display: 'block', width: '100%', height: '100%' }}>
+                <div style={{ display: 'block', width: '100%', height: '100%', position: 'relative' }}>
                   <Image
                     src={coverImage}
                     alt={bean.name}
@@ -86,24 +86,22 @@ async function ProductList({ activeCategory, currentPage }: ProductListProps) {
                     className={styles.productImage}
                     priority={currentPage === 1}
                   />
-                </Link>
+                </div>
                 <div className={styles.quickAddOverlay}>
-                  <Link href={`/shop/${bean.slug}`} className={styles.quickAddButton} style={{ textDecoration: 'none' }}>
+                  <span className={styles.quickAddButton}>
                     View Details
-                  </Link>
+                  </span>
                 </div>
               </div>
               <div className={styles.productInfo}>
                 <div className={styles.productHeader}>
-                  <Link href={`/shop/${bean.slug}`} style={{ textDecoration: 'none' }}>
-                    <h3 className="headline-md" style={{ color: 'var(--color-primary)', fontSize: '20px' }}>{bean.name}</h3>
-                  </Link>
+                  <h3 className="headline-md" style={{ color: 'var(--color-primary)', fontSize: '20px' }}>{bean.name}</h3>
                   <span className={styles.roastTag}>{displayTag}</span>
                 </div>
                 <p className="body-md" style={{ color: 'var(--color-on-surface-variant)' }}>{displayNotes}</p>
                 <p className="body-md" style={{ color: 'var(--color-primary)', fontWeight: 500, marginTop: '8px' }}>{displayPrice}</p>
               </div>
-            </div>
+            </Link>
           );
         })}
       </section>

@@ -94,62 +94,58 @@ export default async function Events() {
         <div className={styles.bentoGrid}>
           {/* Top Row Grid */}
           {topEvents.map((event) => (
-            <article key={event.id} className={`${styles.card} ${event.colSpan ? styles[event.colSpan] : ''}`}>
+            <Link href={`/events/${event.slug}`} key={event.id} className={`${styles.card} ${event.colSpan ? styles[event.colSpan] : ''}`}>
               <div className={`${styles.imageContainer} ${styles[event.imageClass]}`}>
-                <Link href={`/events/${event.slug}`} style={{ display: 'block', width: '100%', height: '100%' }}>
+                <div style={{ display: 'block', width: '100%', height: '100%', position: 'relative' }}>
                   <Image
                     src={event.image}
                     alt={event.title}
                     fill
                     className={styles.image}
                   />
-                </Link>
+                </div>
                 <div className={styles.dateTag}>
                   <span className="label-caps" style={{ color: 'var(--color-primary)' }}>{event.date}</span>
                 </div>
               </div>
               <div className={styles.content}>
-                <Link href={`/events/${event.slug}`} style={{ textDecoration: 'none' }}>
-                  <h2 className={event.colSpan === 'colSpan8' ? 'headline-lg' : 'headline-md'} style={{ color: 'var(--color-primary)' }}>
-                    {event.title}
-                  </h2>
-                </Link>
+                <h2 className={event.colSpan === 'colSpan8' ? 'headline-lg' : 'headline-md'} style={{ color: 'var(--color-primary)' }}>
+                  {event.title}
+                </h2>
                 <p className="body-md" style={{ color: 'var(--color-on-surface-variant)', ...(event.colSpan === 'colSpan8' ? { maxWidth: '600px' } : {}) }}>
                   {event.description}
                 </p>
-                <Link href={`/events/${event.slug}`} className={styles.link}>{event.buttonText}</Link>
+                <span className={styles.link}>{event.buttonText}</span>
               </div>
-            </article>
+            </Link>
           ))}
 
           {/* Bottom Row Grid */}
           {bottomEvents.length > 0 && (
             <div className={styles.bottomGrid}>
               {bottomEvents.map((event) => (
-                <article key={event.id} className={styles.card}>
+                <Link href={`/events/${event.slug}`} key={event.id} className={styles.card}>
                   <div className={`${styles.imageContainer} ${styles[event.imageClass]}`}>
-                    <Link href={`/events/${event.slug}`} style={{ display: 'block', width: '100%', height: '100%' }}>
+                    <div style={{ display: 'block', width: '100%', height: '100%', position: 'relative' }}>
                       <Image
                         src={event.image}
                         alt={event.title}
                         fill
                         className={styles.image}
                       />
-                    </Link>
+                    </div>
                     <div className={styles.dateTag}>
                       <span className="label-caps" style={{ color: 'var(--color-primary)' }}>{event.date}</span>
                     </div>
                   </div>
                   <div className={styles.content}>
-                    <Link href={`/events/${event.slug}`} style={{ textDecoration: 'none' }}>
-                      <h3 className="headline-md" style={{ color: 'var(--color-primary)' }}>{event.title}</h3>
-                    </Link>
+                    <h3 className="headline-md" style={{ color: 'var(--color-primary)' }}>{event.title}</h3>
                     <p className="body-md" style={{ color: 'var(--color-on-surface-variant)' }}>
                       {event.description}
                     </p>
-                    <Link href={`/events/${event.slug}`} className={styles.link}>{event.buttonText}</Link>
+                    <span className={styles.link}>{event.buttonText}</span>
                   </div>
-                </article>
+                </Link>
               ))}
             </div>
           )}

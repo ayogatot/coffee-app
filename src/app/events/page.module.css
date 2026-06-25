@@ -54,6 +54,8 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  text-decoration: none;
+  color: inherit;
 }
 
 .imageContainer {
@@ -87,7 +89,8 @@
   transform: scale(1.05);
 }
 
-.card:hover h2 {
+.card:hover h2,
+.card:hover h3 {
   color: var(--color-secondary) !important;
 }
 
